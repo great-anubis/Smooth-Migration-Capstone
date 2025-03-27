@@ -73,7 +73,6 @@ lib/generated_plugin_registrant.dart
 
 # Icon must end with two \r
 Icon
-smooth_migration_ai/data
 
 # Thumbnails
 ._*
@@ -265,3 +264,5 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.toptal.com/developers/gitignore/api/flutter,node,macos,windows
+
+ai/data
