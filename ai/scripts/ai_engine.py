@@ -2,7 +2,7 @@ import openai
 from scripts.generate_prompt import build_questionnaire_prompt
 
 
-openai.api_key = "your-openai-api-key"  
+openai.api_key = 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
 
 def get_recommendation_from_questionnaire():
     prompt = build_questionnaire_prompt()
