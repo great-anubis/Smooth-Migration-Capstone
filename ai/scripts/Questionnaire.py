@@ -1,3 +1,5 @@
+# questionnaire.py
+
 questionnaire = {
     "basic_info": [
         "What is your full name?", 
@@ -67,4 +69,29 @@ questionnaire = {
         "Are you interested in getting a local credit card or loan options? (Yes/No)",
         "Do you need guidance on tax regulations in your new country? (Yes/No)"
     ]
-} 
+}
+
+def collect_responses():
+    print("\nWelcome to Smooth Migration — Let's get to know your move 👇\n")
+    responses = {}
+
+    for section, questions in questionnaire.items():
+        print(f"\n--- {section.replace('_', ' ').title()} ---")
+        responses[section] = []
+
+        for question in questions:
+            answer = input(f"{question}\n> ").strip()
+            responses[section].append({
+                "question": question,
+                "answer": answer
+            })
+
+    return responses
+
+if __name__ == "__main__":
+    user_data = collect_responses()
+
+    # Print summary (optional)
+    import json
+    print("\n✅ All responses collected:\n")
+    print(json.dumps(user_data, indent=4))

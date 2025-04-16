@@ -1,0 +1,26 @@
+{
+    "basic_info": [
+        {"question": "What is your full name?", "answer": "John Doe"},
+        {"question": "What is your age?", "answer": "30"},
+        {"question": "What is your nationality?", "answer": "Canadian"},
+        {"question": "What type of visa do you have (Work, Student, Residency, Tourist, etc.)?",
+         "answer": "Work"},
+        {"question": "Are you moving alone or with family? (If family, specify number of members)",
+         "answer": "With spouse"},
+        {"question": "What is your estimated migration budget? (Low, Medium, High)",
+         "answer": "Medium"},
+        {"question": "Do you have pets? (Yes/No)", "answer": "Yes"}
+    ],
+    "pre_departure": [
+        {"question": "What is your destination country and city?",
+         "answer": "Germany, Berlin"},
+        {"question": "What is your preferred housing type? (Apartment, House, Shared Housing)",
+         "answer": "Apartment"},
+        {"question": "Do you already have a job lined up? (Yes/No)", "answer": "No"},
+        {"question": "If not, what industry are you looking to work in?",
+         "answer": "Tech"},
+        {"question": "What is your expected arrival date?", "answer": "2024-06-01"},
+        {"question": "What are your primary concerns about relocating? (Legal paperwork, housing, job search, financial planning, cultural adaptation, etc.)",
+         "answer": "job search and housing"}
+    ]
+}
