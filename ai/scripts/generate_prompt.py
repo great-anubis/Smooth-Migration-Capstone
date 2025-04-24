@@ -12,23 +12,24 @@ def build_prompt(user_data: dict) -> str:
     
     # Iterate over each category in the user data
     for section, qa_list in user_data.items():
-        # Convert section to a cleaner header (e.g., "Pre Departure")
+        # Use plain headers (e.g., "Pre-Departure", "Basic Info")
         section_header = section.replace('_', ' ').title()
-        section_details = f"**{section_header}:**\n"
+        section_details = f"{section_header}:\n"
         
-        # Compile each question/answer pair into the prompt
         for qa in qa_list:
             question = qa.get("question", "").strip()
             answer = qa.get("answer", "").strip()
-            # Append the Q/A in a natural-sounding sentence format
-            section_details += f"- {question} {answer}. "
+            if question and answer:
+                section_details += f"  - Question: {question} | Answer: {answer}\n"
         
-        prompt_parts.append(section_details)
+        # Only append if section has content
+        if section_details.strip() != f"{section_header}:":
+            prompt_parts.append(section_details.strip())
     
-    # Combine all parts into one complete string
+    # Combine all parts into a formatted details block
     details = "\n".join(prompt_parts).strip()
     
-    # Build the final natural-language prompt with context for the LLM
+    # Build the final natural-language prompt for LLM
     final_prompt = (
         "Generate a detailed migration checklist based on the following user information. "
         "The checklist should be structured as valid JSON with exactly three sections: "
@@ -39,38 +40,3 @@ def build_prompt(user_data: dict) -> str:
     )
     
     return final_prompt
-
-# --- For testing purposes ---
-if __name__ == "__main__":
-    # Example sample data similar to what the dynamic questionnaire would return.
-    sample_user_data = {
-        "basic_info": [
-            {"question": "What is your full name?", "answer": "John Doe"},
-            {"question": "What is your age?", "answer": "30"},
-            {"question": "What is your nationality?", "answer": "Canadian"},
-            {"question": "What type of visa do you have (Work, Student, Residency, Tourist, etc.)?",
-             "answer": "Work"},
-            {"question": "Are you moving alone or with family? (If family, specify number of members)",
-             "answer": "With spouse"},
-            {"question": "What is your estimated migration budget? (Low, Medium, High)",
-             "answer": "Medium"},
-            {"question": "Do you have pets? (Yes/No)", "answer": "Yes"}
-        ],
-        "pre_departure": [
-            {"question": "What is your destination country and city?",
-             "answer": "Germany, Berlin"},
-            {"question": "What is your preferred housing type? (Apartment, House, Shared Housing)",
-             "answer": "Apartment"},
-            {"question": "Do you already have a job lined up? (Yes/No)", "answer": "No"},
-            {"question": "If not, what industry are you looking to work in?",
-             "answer": "Tech"},
-            {"question": "What is your expected arrival date?", "answer": "2024-06-01"},
-            {"question": "What are your primary concerns about relocating? (Legal paperwork, housing, job search, financial planning, cultural adaptation, etc.)",
-             "answer": "job search and housing"}
-        ],
-        # You can include additional sections such as departure_travel, departure_housing, etc.
-    }
-    
-    prompt = build_prompt(sample_user_data)
-    print("Constructed Prompt:\n")
-    print(prompt)
