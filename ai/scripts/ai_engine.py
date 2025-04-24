@@ -34,15 +34,19 @@ def fill_missing_fields(task):
 
 
 def main():
+    import argparse
     parser = argparse.ArgumentParser(description="AI Migration Checklist Debug CLI")
     parser.add_argument("--user_data", type=str, help="Path to user_data JSON file (optional)")
+    parser.add_argument("--from_stdin", action='store_true', help="Read user data from stdin as JSON")
     args = parser.parse_args()
 
-    if args.user_data and os.path.exists(args.user_data):
+    if args.from_stdin:
+        # Read JSON from stdin
+        user_data = json.load(sys.stdin)
+    elif args.user_data and os.path.exists(args.user_data):
         with open(args.user_data, "r") as f:
             user_data = json.load(f)
     else:
-        # Fallback to questionnaire or use static sample for debug
         user_data = collect_responses()
 
     prompt = build_prompt(user_data)
@@ -64,7 +68,6 @@ def main():
         if section in checklist and isinstance(checklist[section], list):
             checklist[section] = [fill_missing_fields(task) for task in checklist[section]]
 
-    print("\n✅ Final Migration Checklist:\n")
     print(json.dumps(checklist, indent=4))
 
 if __name__ == "__main__":
