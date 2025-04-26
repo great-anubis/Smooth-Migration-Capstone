@@ -10,9 +10,9 @@ def build_prompt(user_data: dict) -> str:
     """
     prompt_parts = []
     
-    # Iterate over each category in the user data
+    
     for section, qa_list in user_data.items():
-        # Use plain headers (e.g., "Pre-Departure", "Basic Info")
+        
         section_header = section.replace('_', ' ').title()
         section_details = f"{section_header}:\n"
         
@@ -22,14 +22,14 @@ def build_prompt(user_data: dict) -> str:
             if question and answer:
                 section_details += f"  - Question: {question} | Answer: {answer}\n"
         
-        # Only append if section has content
+        
         if section_details.strip() != f"{section_header}:":
             prompt_parts.append(section_details.strip())
     
-    # Combine all parts into a formatted details block
+    
     details = "\n".join(prompt_parts).strip()
     
-    # Build the final natural-language prompt for LLM
+    
     final_prompt = (
         "Generate a detailed migration checklist based on the following user information. "
         "The checklist should be structured as valid JSON with exactly three sections: "
