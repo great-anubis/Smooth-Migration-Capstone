@@ -1,3 +1,5 @@
+import json
+
 def build_prompt(user_data: dict) -> str:
     """
     Constructs a natural-language prompt from the structured user responses.
@@ -8,8 +10,10 @@ def build_prompt(user_data: dict) -> str:
     Returns:
         str: A prompt string summarizing the user's migration context.
     """
+    print("DEBUG — Input to build_prompt:\n", json.dumps(user_data, indent=2))
+
     prompt_parts = []
-    
+
     # Iterate over each category in the user data
     for section, qa_list in user_data.items():
         # Use plain headers (e.g., "Pre-Departure", "Basic Info")
@@ -17,10 +21,14 @@ def build_prompt(user_data: dict) -> str:
         section_details = f"{section_header}:\n"
         
         for qa in qa_list:
-            question = qa.get("question", "").strip()
-            answer = qa.get("answer", "").strip()
-            if question and answer:
-                section_details += f"  - Question: {question} | Answer: {answer}\n"
+            if isinstance(qa, dict):
+                question = qa.get("question", "").strip()
+                answer = qa.get("answer", "").strip()
+                if question and answer:
+                    section_details += f"  - Question: {question} | Answer: {answer}\n"
+            elif isinstance(qa, str):
+                section_details += f"  - Answer: {qa.strip()}\n"
+
         
         # Only append if section has content
         if section_details.strip() != f"{section_header}:":
