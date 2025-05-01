@@ -4,10 +4,14 @@ const bodyParser = require('body-parser');
 const { spawn } = require('child_process');
 
 const app = express();
+const servicesRoute = require('./routes/services');
+
 const PORT = 5000;
 
 app.use(cors());
 app.use(bodyParser.json());
+app.use(express.json());
+app.use('/services', servicesRoute);
 
 // POST /recommendations
 app.post('/recommendations', (req, res) => {

@@ -1,0 +1,140 @@
+DEBUG — Input to build_prompt:
+ {
+  "basic_info": [
+    {
+      "question": "What is your full name?",
+      "answer": "Alex Mercer"
+    },
+    {
+      "question": "What is your age?",
+      "answer": "30"
+    },
+    {
+      "question": "What is your nationality?",
+      "answer": "Canadian"
+    },
+    {
+      "question": "What type of visa do you have?",
+      "answer": "Work"
+    },
+    {
+      "question": "Are you moving alone or with family?",
+      "answer": "Alone"
+    },
+    {
+      "question": "What is your estimated migration budget?",
+      "answer": "Medium"
+    },
+    {
+      "question": "Do you have pets?",
+      "answer": "No"
+    }
+  ],
+  "pre_departure": [
+    {
+      "question": "What is your destination country and city?",
+      "answer": "Berlin, Germany"
+    },
+    {
+      "question": "What is your preferred housing type?",
+      "answer": "Apartment"
+    },
+    {
+      "question": "Do you already have a job lined up?",
+      "answer": "Yes"
+    },
+    {
+      "question": "What is your expected arrival date?",
+      "answer": "2025-07-01"
+    },
+    {
+      "question": "What are your primary concerns about relocating?",
+      "answer": "housing, financial planning, cultural adaptation"
+    }
+  ]
+}
+{
+    "Pre-Departure": [
+        {
+            "task": "Research housing options in Berlin, Germany",
+            "phase": "Pre-Departure",
+            "api_trigger": "unknown",
+            "due_date": null,
+            "completed": false
+        },
+        {
+            "task": "Create a financial plan for the migration",
+            "phase": "Pre-Departure",
+            "api_trigger": "unknown",
+            "due_date": null,
+            "completed": false
+        },
+        {
+            "task": "Start learning about the culture and customs of Germany",
+            "phase": "Pre-Departure",
+            "api_trigger": "unknown",
+            "due_date": null,
+            "completed": false
+        },
+        {
+            "task": "Confirm job details and requirements with the employer",
+            "phase": "Pre-Departure",
+            "api_trigger": "unknown",
+            "due_date": null,
+            "completed": false
+        },
+        {
+            "task": "Book flights to Berlin for the arrival date on 2025-07-01",
+            "phase": "Pre-Departure",
+            "api_trigger": "unknown",
+            "due_date": null,
+            "completed": false
+        }
+    ],
+    "Departure": [
+        {
+            "task": "Pack necessary documents (passport, visa, job offer letter, etc.)",
+            "phase": "Departure",
+            "api_trigger": "unknown",
+            "due_date": null,
+            "completed": false
+        },
+        {
+            "task": "Arrange for transportation to the airport on the departure day",
+            "phase": "Departure",
+            "api_trigger": "unknown",
+            "due_date": null,
+            "completed": false
+        },
+        {
+            "task": "Check-in online for the flight to Berlin",
+            "phase": "Departure",
+            "api_trigger": "unknown",
+            "due_date": null,
+            "completed": false
+        }
+    ],
+    "Post-Departure": [
+        {
+            "task": "Find a temporary accommodation in Berlin upon arrival",
+            "phase": "Post-Departure",
+            "api_trigger": "unknown",
+            "due_date": null,
+            "completed": false
+        },
+        {
+            "task": "Open a local bank account in Berlin for financial transactions",
+            "phase": "Post-Departure",
+            "api_trigger": "unknown",
+            "due_date": null,
+            "completed": false
+        },
+        {
+            "task": "Attend cultural adaptation workshops or events in Berlin",
+            "phase": "Post-Departure",
+            "api_trigger": "unknown",
+            "due_date": null,
+            "completed": false
+        }
+    ]
+}

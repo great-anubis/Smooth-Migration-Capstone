@@ -1,0 +1,19 @@
+{
+    "basic_info": [
+      { "question": "What is your full name?", "answer": "Alex Mercer" },
+      { "question": "What is your age?", "answer": "30" },
+      { "question": "What is your nationality?", "answer": "Canadian" },
+      { "question": "What type of visa do you have?", "answer": "Work" },
+      { "question": "Are you moving alone or with family?", "answer": "Alone" },
+      { "question": "What is your estimated migration budget?", "answer": "Medium" },
+      { "question": "Do you have pets?", "answer": "No" }
+    ],
+    "pre_departure": [
+      { "question": "What is your destination country and city?", "answer": "Berlin, Germany" },
+      { "question": "What is your preferred housing type?", "answer": "Apartment" },
+      { "question": "Do you already have a job lined up?", "answer": "Yes" },
+      { "question": "What is your expected arrival date?", "answer": "2025-07-01" },
+      { "question": "What are your primary concerns about relocating?", "answer": "housing, financial planning, cultural adaptation" }
+    ]
+  }
+  
