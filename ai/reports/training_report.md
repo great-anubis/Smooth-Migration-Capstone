@@ -1,7 +1,7 @@
 # Training Report - Week 5
 
 ## Date:
-*Enter the current date here*
+4/24/25
 
 ## Overview:
 This report documents the progress made during Week 5 for the Smooth Migration Mobile App AI model. The focus was on finalizing the AI-generated checklist, ensuring valid JSON output from the baseline model, and setting up integration stubs for the upcoming integration phase.
@@ -44,3 +44,22 @@ This report documents the progress made during Week 5 for the Smooth Migration M
 
 ## Additional Comments:
 *Enter any additional remarks or lessons learned here.*
+
+
+---
+
+### ✅ Test Profile 1 – Solo Professional Migrant (Alex Mercer)
+
+**Input Summary:**
+- Canadian, age 30, solo relocation to Berlin, Germany
+- Visa: Work | Budget: Medium | Has job lined up | No pets
+- Primary concerns: housing, financial planning, cultural adjustment
+
+**Checklist Validation:**
+- ✅ Output includes all 3 phases (Pre-Departure, Departure, Post-Departure)
+- ✅ All tasks have: `task`, `phase`, `api_trigger`, `due_date`, `completed`
+- ✅ Task suggestions mostly align with profile: visa prep, housing setup, cultural transition, banking
+- ❌ [Leave blank if no issues found — or write down anything odd/missing]
+
+**Next Steps / Fixes:**
+- None for this profile
