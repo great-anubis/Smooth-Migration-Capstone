@@ -1,25 +1,13 @@
 import json
 
 def build_prompt(user_data: dict) -> str:
-    """
-    Constructs a natural-language prompt from the structured user responses.
-
-    Args:
-        user_data (dict): Dictionary with categorized user responses.
-
-    Returns:
-        str: A prompt string summarizing the user's migration context.
-    """
-    print("DEBUG — Input to build_prompt:\n", json.dumps(user_data, indent=2))
 
     prompt_parts = []
 
-    # Iterate over each category in the user data
     for section, qa_list in user_data.items():
-        # Use plain headers (e.g., "Pre-Departure", "Basic Info")
         section_header = section.replace('_', ' ').title()
         section_details = f"{section_header}:\n"
-        
+
         for qa in qa_list:
             if isinstance(qa, dict):
                 question = qa.get("question", "").strip()
@@ -29,15 +17,11 @@ def build_prompt(user_data: dict) -> str:
             elif isinstance(qa, str):
                 section_details += f"  - Answer: {qa.strip()}\n"
 
-        
-        # Only append if section has content
         if section_details.strip() != f"{section_header}:":
             prompt_parts.append(section_details.strip())
-    
-    # Combine all parts into a formatted details block
+
     details = "\n".join(prompt_parts).strip()
-    
-    # Build the final natural-language prompt for LLM
+
     final_prompt = (
         "Generate a detailed migration checklist based on the following user information. "
         "The checklist should be structured as valid JSON with exactly three sections: "
@@ -46,5 +30,5 @@ def build_prompt(user_data: dict) -> str:
         "User Details:\n"
         f"{details}"
     )
-    
+
     return final_prompt
