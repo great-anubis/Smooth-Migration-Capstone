@@ -53,12 +53,12 @@ app.post('/recommendations', (req, res, next) => {
   });
 });
 
-// global error handler
+
 app.use((err,req,res,next)=>{
   console.error(err);
   res.status(500).json({ error:err.message });
 });
 
-app.listen(5000, () => console.log('🚀 Backend server on http://localhost:5000'));
+app.listen(5000, () => console.log(' Backend server on http://localhost:5000'));
 
 
