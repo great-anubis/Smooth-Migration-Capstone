@@ -1,53 +1,93 @@
-const express = require('express');
-const cors = require('cors');
+const express    = require('express');
+const cors       = require('cors');
 const bodyParser = require('body-parser');
-const { spawn } = require('child_process');
+const { spawn }  = require('child_process');
 
-const app = express();
+
+const checklistMapping = require('./models/checklist_mapping.json');
+
+const DUE_DATE_RULES = {
+  visa:         14,
+  housing:       7,
+  job:           7,
+  finance:       5,
+  legal:        10,
+  healthcare:    7,
+  post_arrival:  3
+};
+
+const app  = express();
 const PORT = 5000;
 
-app.use(cors());
-app.use(bodyParser.json());
-
-// POST /recommendations
-app.post('/recommendations', (req, res) => {
-    // Grab user data from request body
-    const userData = req.body;
-
-    const py = spawn('python', ['../ai/scripts/ai_engine.py', '--from_stdin']);
+app.use(cors());            
+app.use(bodyParser.json()); 
 
 
-    let output = '';
-    let error = '';
+app.post('/recommendations', (req, res, next) => {
+  const userData = req.body;
+  const py = spawn('python', ['../ai/scripts/ai_engine.py', '--from_stdin']);
 
-    py.stdin.write(JSON.stringify(userData));
-    py.stdin.end();
+  let stdout = '', stderr = '';
+  py.stdin.write(JSON.stringify(userData));
+  py.stdin.end();
 
-    py.stdout.on('data', (data) => {
-        output += data.toString();
-    });
+  py.stdout.on('data', d => stdout += d.toString());
+  py.stderr.on('data', d => stderr += d.toString());
 
-    py.stderr.on('data', (data) => {
-        error += data.toString();
-    });
+  py.on('close', code => {
+    if (code !== 0) {
+      return next(new Error(`Python exited ${code}: ${stderr}`));
+    }
 
-    py.on('close', (code) => {
-        if (code === 0 && output) {
-            try {
-                // Parse output as JSON (your ai_engine.py should print the final checklist only)
-                const jsonStart = output.indexOf('{');
-                const jsonStr = output.slice(jsonStart);
-                const checklist = JSON.parse(jsonStr);
-                res.json(checklist);
-            } catch (err) {
-                res.status(500).json({ error: "Failed to parse AI output", details: err.message, raw: output });
+    try {
+      
+      const jsonStart = stdout.indexOf('{');
+      const aiResult  = JSON.parse(stdout.slice(jsonStart));
+      let tasks       = aiResult.tasks || [];
+
+      
+      tasks = tasks.map(task => {
+        const text = (task.description || '').toLowerCase();
+
+        
+        if (!task.api_trigger) {
+          for (const [trigger, keywords] of Object.entries(checklistMapping)) {
+            if (keywords.some(kw => text.includes(kw))) {
+              task.api_trigger = trigger;
+              break;
             }
-        } else {
-            res.status(500).json({ error: "Python process failed", details: error });
+          }
         }
-    });
+
+        
+        if (task.api_trigger) {
+          task.service = task.api_trigger;
+        }
+
+        
+        if (!task.due_date && task.api_trigger && DUE_DATE_RULES[task.api_trigger]) {
+          const days = DUE_DATE_RULES[task.api_trigger];
+          const due  = new Date(Date.now() + days * 86400000);
+          task.due_date = due.toISOString().split('T')[0];
+        }
+
+        return task;
+      });
+
+      res.json({ tasks });
+    } catch (err) {
+      next(new Error(`Failed to parse/enrich AI output: ${err.message}`));
+    }
+  });
+});
+
+
+app.use((err, req, res, next) => {
+  console.error(err);
+  res.status(500).json({ error: err.message });
 });
 
 app.listen(PORT, () => {
-    console.log(`Backend server running on http://localhost:${PORT}`);
+  console.log(`🚀 Backend server running on http://localhost:${PORT}`);
 });
+
