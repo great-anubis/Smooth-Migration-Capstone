@@ -1,0 +1,9 @@
+{
+  "visa": ["visa", "work permit", "residency permit"],
+  "housing": ["rent", "apartment", "house", "furnish"],
+  "job": ["job", "work", "industry", "role"],
+  "finance": ["bank", "account", "loan", "budget"],
+  "legal": ["legal", "permit", "paperwork"],
+  "healthcare": ["insurance", "health", "medical"],
+  "post_arrival": ["utilities", "school", "childcare", "tax"]
+}
