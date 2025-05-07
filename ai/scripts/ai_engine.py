@@ -8,7 +8,7 @@ PROJECT_ROOT = os.path.abspath(os.path.join(SCRIPT_DIR, ".."))
 if PROJECT_ROOT not in sys.path:
     sys.path.insert(0, PROJECT_ROOT)
 
-from questionnaire import collect_responses
+# Removed import of collect_responses
 from generate_prompt import build_prompt
 from models.baseline_model import generate_recommendation
 
@@ -50,7 +50,8 @@ def main():
             with open(args.user_data, "r") as f:
                 user_data = json.load(f)
         else:
-            user_data = collect_responses()
+            # Neither --from_stdin nor --user_data provided: abort
+            raise ValueError("Must supply --from_stdin or --user_data; aborting.")
     except Exception as e:
         print("ERROR: Failed to load user data:", e)
         return

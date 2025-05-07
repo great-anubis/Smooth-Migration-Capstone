@@ -1,33 +1,39 @@
+const { generateChecklist } = require('../ai/generateChecklist');
 const Checklist = require('../models/Checklist');
 
 exports.createChecklist = async (req, res) => {
-  const { title, tasks } = req.body;
   try {
-    const checklist = await Checklist.create({
-      user: req.user.id,
-      title,
-      tasks
+    const answers = req.body.answers;
+    const userId  = req.user.id;
+
+    // 1. Generate tasks via AI
+    const tasks = await generateChecklist(answers);
+
+    // 2. Save to MongoDB
+    const newList = await Checklist.create({
+      user:  userId,
+      items: tasks
     });
-    res.status(201).json(checklist);
+
+    return res.status(201).json(newList);
   } catch (err) {
-    res.status(400).json({ error: err.message });
+    console.error(err);
+    return res.status(500).json({ error: err.message });
   }
 };
 
-exports.getChecklists = async (req, res) => {
+exports.getChecklist = async (req, res) => {
   try {
-    const lists = await Checklist.find({ user: req.user.id });
-    res.json(lists);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-};
+    const userId = req.params.id;
 
-exports.deleteChecklist = async (req, res) => {
-  try {
-    await Checklist.findByIdAndDelete(req.params.id);
-    res.json({ message: 'Checklist deleted' });
+    // Fetch the most recent checklist for this user
+    const list = await Checklist.findOne({ user: userId }).sort({ createdAt: -1 });
+    if (!list) {
+      return res.json({ user: userId, items: [] });
+    }
+    return res.json(list);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.error(err);
+    return res.status(500).json({ error: err.message });
   }
 };

@@ -1,15 +1,23 @@
 const express = require('express');
+const router = express.Router();
+const authMiddleware = require('../middlewares/authMiddleware');
 const {
   createChecklist,
-  getChecklists,
-  deleteChecklist
+  getChecklist
 } = require('../controllers/checklistController');
-const auth = require('../middlewares/authMiddleware');
 
-const router = express.Router();
+// POST /api/checklist/recommendations
+router.post(
+  '/recommendations',
+  authMiddleware,
+  createChecklist
+);
 
-router.post('/', auth, createChecklist);
-router.get('/', auth, getChecklists);
-router.delete('/:id', auth, deleteChecklist);
+// GET /api/checklist/user/:id/checklist
+router.get(
+  '/user/:id/checklist',
+  authMiddleware,
+  getChecklist
+);
 
 module.exports = router;
