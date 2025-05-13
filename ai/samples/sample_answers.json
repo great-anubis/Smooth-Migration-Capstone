@@ -1,0 +1,8 @@
+{
+  "name": "Alex",
+  "age": 35,
+  "visa_type": "Tourist",
+  "destination_country": "Canada",
+  "destination_city": "Toronto",
+  "pets": false
+}
